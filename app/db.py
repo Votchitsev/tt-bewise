@@ -14,5 +14,15 @@ class BaseMeta(ormar.ModelMeta):
     database = database
 
 
+class Questions(ormar.Model):
+    class Meta(BaseMeta):
+        tablename = "questions"
+
+    id: int = ormar.Integer(primary_key=True)
+    question_text: str = ormar.String(max_length=255)
+    answer_text: str = ormar.String(max_length=255)
+    created_at: str = ormar.String(max_length=50)
+
+
 engine = sqlalchemy.create_engine(settings.db_url)
 metadata.create_all(engine)
