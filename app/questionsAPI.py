@@ -1,15 +1,16 @@
 import requests
+import typing
 
 from .db import Questions
 
 
 class QuestionsAPI:
-    def __init__(self, url) -> None:
+    def __init__(self, url: str) -> None:
         self.url = url
         self.previous_questions = []
         self.current_questions = []
 
-    def _turn_questions(self):
+    def _turn_questions(self) -> typing.Dict:
         result = self.previous_questions
         self.previous_questions = self.current_questions
         self.current_questions = []
@@ -22,7 +23,7 @@ class QuestionsAPI:
         
         return {}
 
-    async def get_questions(self, count):
+    async def get_questions(self, count: int) -> typing.Callable:
         questions_from_api = requests.get(f"{self.url}?count={count}").json()
 
         not_created_count = 0
