@@ -13,7 +13,7 @@ questions_api = QuestionsAPI('https://jservice.io/api/random')
 templates = Jinja2Templates(directory='app/templates')
 
 
-@app.get('/', response_class=HTMLResponse)
+@app.get('/', response_class=HTMLResponse, include_in_schema=False)
 def root(request: Request):
     return templates.TemplateResponse('index.html', context={'request': request})
 
