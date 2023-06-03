@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException, status
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from .db import database
@@ -23,6 +23,12 @@ async def questions(query: QuestionsQuery):
     questions_count = query.questions_num
 
     prev_questions = await questions_api.get_questions(questions_count)
+
+    if prev_questions == False:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail='Something wrong',
+        )
 
     return prev_questions
 

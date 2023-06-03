@@ -33,7 +33,11 @@ class QuestionsAPI:
         return questions
 
     async def get_questions(self, count: int) -> typing.Callable:
-        questions_from_api = requests.get(f"{self.url}?count={count}").json()
+
+        try:
+            questions_from_api = requests.get(f"{self.url}?count={count}").json()
+        except:
+            return False
 
         if not self.questions_from_db:
             self.questions_from_db = await self._get_questions_from_db()
